@@ -1,0 +1,26 @@
+title: Akhil Labudubariki 
+description: 
+url: https://akhillb.github.io 
+avatar: /assets/img/avatar.jpg
+favicon: /assets/img/favicon.ico
+google_analytics: # google analytics id
+disqus_shortname: # disqus_shortname for disqus comment system
+
+about:
+  - paragraph: Hi, I am Akhil. I am a software developer who loves to build really cool stuff.
+    text_align: center
+  - paragraph: I am from the awesome city of Vishakhapatnam (Andhra Pradesh), completed my graduation with a 
+               Bachelors in Technology in Computer Science and Engineering from IIT Madras. Now I work with the
+               super cool folks at ?link?.
+    text_align: center
+    links:
+      - name: BrowserStack
+        url: https://www.browserstack.com
+        external: true
+  - paragraph: I love to solve problems. Most of my interests are in the fields of Algorithms, Compilers,
+               Computer Vision and Artificial Intelligence. I am proficient in C++, Python and Javascript.
+               I have experience in working on Ruby and Go. Also experienced with technologies like NodeJs,
+               Redis, MYSQL, MongoDb.
+    text_align: center
+  - paragraph: You can reach me at akhil.lb1@gmail.com
+    text_align: center
