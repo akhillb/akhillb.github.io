@@ -143,8 +143,8 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                1
-                <span>post</span>
+                2
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 0
@@ -190,6 +190,130 @@
 
             
             <section id="main">
+    <article id="post-ruby-symbols" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/02/23/ruby-symbols/">Mortal and Immortal Symbols in Ruby</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/23/ruby-symbols/">
+            <time datetime="2017-02-23T04:15:38.000Z" itemprop="datePublished">February 23rd 2017</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Symbols are one of the most powerful datatypes that Ruby has to offer. Compare<br>and lookup operations are faster when symbols are used rather than strings. You<br>can check this <a href="http://www.reactive.io/tips/2009/01/11/the-difference-between-ruby-symbols-and-strings" target="_blank" rel="external">post</a> here know more about symbols and their performance when compared to strings.</p>
+<p>One disadvantage of using symbols is that, they live in the program’s memory<br>for the entire life cycle of it’s execution. This is one of the reasons for faster symbol lookups. This also was the reason for many denial of service vulnerabilites in Ruby, for example <a href="https://www.ruby-lang.org/en/news/2013/02/22/json-dos-cve-2013-0269/" target="_blank" rel="external">this one</a>.  </p>
+<p>From Ruby 2.2, there is a new concept of Mortal and Immortal Symbols. Internally<br>ruby has three types of symbols. Mortal dynamic symbols, which are symbols<br>created dynamically by user, Immortal dynamic symbols are the mortal dynamic symbols<br>that have been promoted to immortal dynamic symbols and then there are immortal<br>static symbols, which are function names, class names etc. The GC only collects the<br>Mortal dynamic symbols. An example of such symbols are symbols created by <code>to_sym</code> method.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://akhillb.github.io/2017/02/23/ruby-symbols/" data-id="cizo7xrii00000dskbu7rwia5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://akhillb.github.io/2017/02/23/ruby-symbols/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/02/23/ruby-symbols/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -235,7 +359,7 @@
 
 </div>
 
-    <a data-url="https://akhillb.github.io/2017/02/11/hello-world/" data-id="ciz18cvfr0000yjskq0x5jsan" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://akhillb.github.io/2017/02/11/hello-world/" data-id="cizo7xrio00020dskar7arbot" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -325,6 +449,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2017/02/23/ruby-symbols/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/02/23/ruby-symbols/" class="title">Mortal and Immortal Symbols in Ruby</a></p>
+                            <p class="item-date"><time datetime="2017-02-23T04:15:38.000Z" itemprop="datePublished">February 23rd 2017</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2017/02/11/hello-world/" class="thumbnail">
     
     
@@ -350,7 +493,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
