@@ -3,14 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive | Akhil&#39;s Personal Blog</title>
+    <title>Mortal and Immortal Symbols in Ruby | Akhil&#39;s Personal Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Akhil's Personal Blog">
-<meta property="og:url" content="https://akhillb.github.io/archives/index.html">
+    <meta name="description" content="Symbols are one of the most powerful datatypes that Ruby has to offer. Compareand lookup operations are faster when symbols are used rather than strings. Youcan check this post here know more about sy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mortal and Immortal Symbols in Ruby">
+<meta property="og:url" content="https://akhillb.github.io/2017/02/23/ruby-symbols/index.html">
 <meta property="og:site_name" content="Akhil's Personal Blog">
+<meta property="og:description" content="Symbols are one of the most powerful datatypes that Ruby has to offer. Compareand lookup operations are faster when symbols are used rather than strings. Youcan check this post here know more about sy">
+<meta property="og:updated_time" content="2017-02-27T14:46:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Akhil's Personal Blog">
+<meta name="twitter:title" content="Mortal and Immortal Symbols in Ruby">
+<meta name="twitter:description" content="Symbols are one of the most powerful datatypes that Ruby has to offer. Compareand lookup operations are faster when symbols are used rather than strings. Youcan check this post here know more about sy">
     
 
     
@@ -189,25 +193,21 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            <section id="main"><article id="post-ruby-symbols" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/02/23/ruby-symbols/">Mortal and Immortal Symbols in Ruby</a>
+        <h1 class="article-title" itemprop="name">
+            Mortal and Immortal Symbols in Ruby
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
         <a href="/2017/02/23/ruby-symbols/">
@@ -216,39 +216,130 @@
     </div>
 
 
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                        
+                        
+                    </div>
                 
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Symbols are one of the most powerful datatypes that Ruby has to offer. Compare<br>and lookup operations are faster when symbols are used rather than strings. You<br>can check this <a href="http://www.reactive.io/tips/2009/01/11/the-difference-between-ruby-symbols-and-strings" target="_blank" rel="external">post</a> here know more about symbols and their performance when compared to strings.</p>
+<p>One disadvantage of using symbols is that, they live in the program’s memory<br>for the entire life cycle of it’s execution. This is one of the reasons for faster symbol lookups. This also was the reason for many denial of service vulnerabilites in Ruby, for example <a href="https://www.ruby-lang.org/en/news/2013/02/22/json-dos-cve-2013-0269/" target="_blank" rel="external">this one</a>.  </p>
+<p>From Ruby 2.2, there is a new concept of Mortal and Immortal Symbols. Internally<br>ruby has three types of symbols. Mortal dynamic symbols, which are symbols<br>created dynamically by user, Immortal dynamic symbols are the mortal dynamic symbols<br>that have been promoted to immortal dynamic symbols and then there are immortal<br>static symbols, which are function names, class names etc. The GC only collects the<br>Mortal dynamic symbols. An example of such symbols are symbols created by <code>to_sym</code> method.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://akhillb.github.io/2017/02/23/ruby-symbols/" data-id="cizo7xrii00000dskbu7rwia5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/02/11/hello-world/">Hello World</a>
-        </h1>
+        <a href="https://akhillb.github.io/2017/02/23/ruby-symbols/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/02/23/ruby-symbols/">Comments</a>
     
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/02/11/hello-world/">
-            <time datetime="2017-02-11T13:01:43.000Z" itemprop="datePublished">February 11th 2017</time>
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/02/11/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Hello World</div>
         </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
 
-
-                    
-                    
-                </div>
-            </div>
-        </div>
     
-</div>
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -328,11 +419,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://akhillb.github.io/2017/02/23/ruby-symbols/';
+        
+        this.page.identifier = 'ruby-symbols';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'akhil-lb' + '.disqus.com/count.js';
+        s.src = '//' + 'akhil-lb' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
