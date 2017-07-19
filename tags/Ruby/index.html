@@ -3,21 +3,14 @@
 <head>
     <meta charset="utf-8">
     
-    <title>About | Akhil&#39;s Personal Blog</title>
+    <title>Tag: Ruby | Akhil&#39;s Personal Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About">
-<meta property="og:url" content="https://akhillb.github.io/about/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Akhil's Personal Blog">
+<meta property="og:url" content="https://akhillb.github.io/tags/Ruby/index.html">
 <meta property="og:site_name" content="Akhil's Personal Blog">
-<meta property="og:description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
-<meta property="og:updated_time" content="2017-02-27T14:18:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About">
-<meta name="twitter:description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
+<meta name="twitter:title" content="Akhil's Personal Blog">
     
 
     
@@ -207,116 +200,45 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
+            <section id="main">
+<div class="timeline timeline-wrap">
+    <div class="timeline-row timeline-row-major">
+        <span class="node"><i class="fa fa-tag"></i></span>
+        <h1 class="title">#Ruby</h1>
+    </div>
+    
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
                 
     
-        <h1 class="article-title" itemprop="name">
-            About
+        <h1 itemprop="name">
+            <a class="timeline-article-title" href="/2017/02/23/ruby-symbols/">Mortal and Immortal Symbols in Ruby</a>
         </h1>
     
 
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Hi, I am Akhil and welcome to my page.</p>
-<p>Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), completed my graduation with a Bachelors in Technology in Computer Science and Engineering from IIT Madras. Now I work with the super cool folks at <a href="https://www.browserstack.com" target="_blank" rel="external">BrowserStack</a>.</p>
-<p>I love to solve problems. Most of my interests are in the fields of Algorithms, Compilers, Computer Vision and Artificial Intelligence. I am proficient in C++, Python and Javascript. I also used Ruby and Go. Ruby on Rails, NodeJS, MySQL, Redis and MongoDB are some of the most prominent technologies I have used apart from a lot of other small ones.</p>
-<p>You can reach me at akhil.lb1@gmail.com.</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://akhillb.github.io/about/index.html" data-id="cj5b1fiav0001lcskvytc41x3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-        </footer>
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/23/ruby-symbols/">
+            <time datetime="2017-02-23T04:15:38.000Z" itemprop="datePublished">February 23rd 2017</time>
+        </a>
     </div>
-    
-        
-
-    
-</article>
 
 
+                    
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Ruby/">Ruby</a>
+    </div>
+
+                </div>
+            </div>
+        </div>
     
+</div>
 </section>
             
                 <aside id="sidebar">
@@ -402,8 +324,6 @@ ga('send', 'pageview');
     
     <script>
     var disqus_config = function () {
-        
-            this.page.url = 'https://akhillb.github.io/about/index.html';
         
         this.page.identifier = 'undefined';
     };

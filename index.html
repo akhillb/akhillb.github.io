@@ -32,6 +32,17 @@
         <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
     
     
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-102871020-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
     
     
 
@@ -143,12 +154,12 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                2
+                3
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                0
-                <span>tag</span>
+                4
+                <span>tags</span>
             </div>
         </div>
         
@@ -190,6 +201,135 @@
 
             
             <section id="main">
+    <article id="post-ocsp" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/07/19/ocsp/">Trust Evaluation in iOS devices</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/19/ocsp/">
+            <time datetime="2017-07-19T13:23:29.000Z" itemprop="datePublished">July 19th 2017</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Apple/">Apple</a>, <a class="tag-link" href="/tags/Security/">Security</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is valid or not. For verifying these certificates it provides an API called <a href="https://developer.apple.com/documentation/security/1394363-sectrustevaluate?language=objc" target="_blank" rel="external"><code>SecTrustEvaluate</code></a>.</p>
+<p>Now this function evaluates all the certificates in your chain of trust from the end SSL certificate to the root certificate. For each certificate, it evaluates whether it has been revoked or not. It chooses different methods for this, in an incremental approach. First it checks them in it’s cache, then in the set of certificates that the system has in the keychain and then it hits apple servers to verify them. Now, this is a network operation and remember that this operations is applied for all the certificates in your trust chain. It has a timeout of 7 seconds. The network operation uses something called the <a href="https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol" target="_blank" rel="external">OCSP Protocol</a> to evaluate the revocation status of each certificate. Unlike OSX, iOS does not have support to choose between CRL or OCSP. OCSP is enabled by default for iOS devices. In brief, the OSCP protocol is as follows. The device sends an HTTP request to a OSCP responder, like <a href="http://ocsp.apple.com" target="_blank" rel="external">http://ocsp.apple.com</a> and gets the response regarding the trustiness of the certificate. Since the request and response do not contain any sensitive information, HTTP can be used for these requests. These devices use a best effort level regarding the certificates. If they could not find any information regarding each of these certificates, then it considers it as trust worthy. These certificates are then added to its cache or the keychain.</p>
+<p>When using this API, it should be noted that this can be a blocking request. So it is not a good idea to use this on the main thread. Or, you could use <a href="https://developer.apple.com/documentation/security/1400632-sectrustevaluateasync?language=objc" target="_blank" rel="external"><code>SecTrustEvaluateAsync</code></a> for this job.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://akhillb.github.io/2017/07/19/ocsp/" data-id="cj5b1hhhx0001goskx1ivav87" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://akhillb.github.io/2017/07/19/ocsp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/07/19/ocsp/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-ruby-symbols" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -215,6 +355,11 @@
 
                         
                         
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Ruby/">Ruby</a>
+    </div>
+
                     </div>
                 
             </header>
@@ -236,7 +381,7 @@
 
 </div>
 
-    <a data-url="https://akhillb.github.io/2017/02/23/ruby-symbols/" data-id="cizo7xrii00000dskbu7rwia5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://akhillb.github.io/2017/02/23/ruby-symbols/" data-id="cj5b1fiax0002lcsk1sojnrm2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -359,7 +504,7 @@
 
 </div>
 
-    <a data-url="https://akhillb.github.io/2017/02/11/hello-world/" data-id="cizo7xrio00020dskar7arbot" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://akhillb.github.io/2017/02/11/hello-world/" data-id="cj5b1fi9q0000lcsk030v1u21" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -444,19 +589,18 @@
     <div class="widget-wrap">
         <h3 class="widget-title">recent</h3>
         <div class="widget">
-            <ul id="recent-post" class="">
+            <ul id="recent-post" class="no-thumbnail">
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2017/02/23/ruby-symbols/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/07/19/ocsp/" class="title">Trust Evaluation in iOS devices</a></p>
+                            <p class="item-date"><time datetime="2017-07-19T13:23:29.000Z" itemprop="datePublished">July 19th 2017</time></p>
                         </div>
+                    </li>
+                
+                    <li>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
@@ -466,16 +610,6 @@
                     </li>
                 
                     <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/02/11/hello-world/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
@@ -493,7 +627,25 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apple/">Apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
         </div>
     </div>
 
