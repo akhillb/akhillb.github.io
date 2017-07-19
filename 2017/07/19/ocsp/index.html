@@ -3,21 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>About | Akhil&#39;s Personal Blog</title>
+    <title>Trust Evaluation in iOS devices | Akhil&#39;s Personal Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About">
-<meta property="og:url" content="https://akhillb.github.io/about/index.html">
+    <meta name="description" content="Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trust Evaluation in iOS devices">
+<meta property="og:url" content="https://akhillb.github.io/2017/07/19/ocsp/index.html">
 <meta property="og:site_name" content="Akhil's Personal Blog">
-<meta property="og:description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
-<meta property="og:updated_time" content="2017-02-27T14:18:58.000Z">
+<meta property="og:description" content="Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is v">
+<meta property="og:updated_time" content="2017-07-19T20:09:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About">
-<meta name="twitter:description" content="Hi, I am Akhil and welcome to my page.
-Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), comp">
+<meta name="twitter:title" content="Trust Evaluation in iOS devices">
+<meta name="twitter:description" content="Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is v">
     
 
     
@@ -207,7 +204,7 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-ocsp" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -215,10 +212,29 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            About
+            Trust Evaluation in iOS devices
         </h1>
     
 
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/19/ocsp/">
+            <time datetime="2017-07-19T13:23:29.000Z" itemprop="datePublished">July 19th 2017</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Apple/">Apple</a>, <a class="tag-link" href="/tags/Security/">Security</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+                    </div>
                 
             </header>
         
@@ -226,10 +242,9 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Hi, I am Akhil and welcome to my page.</p>
-<p>Here’s a little about myself. I am a software developer who loves to build really cool stuff. I am from the awesome city of Vishakhapatnam (Andhra Pradesh), completed my graduation with a Bachelors in Technology in Computer Science and Engineering from IIT Madras. Now I work with the super cool folks at <a href="https://www.browserstack.com" target="_blank" rel="external">BrowserStack</a>.</p>
-<p>I love to solve problems. Most of my interests are in the fields of Algorithms, Compilers, Computer Vision and Artificial Intelligence. I am proficient in C++, Python and Javascript. I also used Ruby and Go. Ruby on Rails, NodeJS, MySQL, Redis and MongoDB are some of the most prominent technologies I have used apart from a lot of other small ones.</p>
-<p>You can reach me at akhil.lb1@gmail.com.</p>
+            <p>Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is valid or not. For verifying these certificates it provides an API called <a href="https://developer.apple.com/documentation/security/1394363-sectrustevaluate?language=objc" target="_blank" rel="external"><code>SecTrustEvaluate</code></a>.</p>
+<p>Now this function evaluates all the certificates in your chain of trust from the end SSL certificate to the root certificate. For each certificate, it evaluates whether it has been revoked or not. It chooses different methods for this, in an incremental approach. First it checks them in it’s cache, then in the set of certificates that the system has in the keychain and then it hits apple servers to verify them. Now, this is a network operation and remember that this operations is applied for all the certificates in your trust chain. It has a timeout of 7 seconds. The network operation uses something called the <a href="https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol" target="_blank" rel="external">OCSP Protocol</a> to evaluate the revocation status of each certificate. Unlike OSX, iOS does not have support to choose between CRL or OCSP. OCSP is enabled by default for iOS devices. In brief, the OSCP protocol is as follows. The device sends an HTTP request to a OSCP responder, like <a href="http://ocsp.apple.com" target="_blank" rel="external">http://ocsp.apple.com</a> and gets the response regarding the trustiness of the certificate. Since the request and response do not contain any sensitive information, HTTP can be used for these requests. These devices use a best effort level regarding the certificates. If they could not find any information regarding each of these certificates, then it considers it as trust worthy. These certificates are then added to its cache or the keychain.</p>
+<p>When using this API, it should be noted that this can be a blocking request. So it is not a good idea to use this on the main thread. Or, you could use <a href="https://developer.apple.com/documentation/security/1400632-sectrustevaluateasync?language=objc" target="_blank" rel="external"><code>SecTrustEvaluateAsync</code></a> for this job.</p>
 
         
         </div>
@@ -240,7 +255,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://akhillb.github.io/about/index.html" data-id="cj5b1fiav0001lcskvytc41x3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://akhillb.github.io/2017/07/19/ocsp/" data-id="cj5b1hhhx0001goskx1ivav87" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -307,16 +322,40 @@ ga('send', 'pageview');
 </script>
 
             
+    
+        <a href="https://akhillb.github.io/2017/07/19/ocsp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/07/19/ocsp/">Comments</a>
+    
+
         </footer>
     </div>
     
         
+<nav id="article-nav">
+    
+    
+        <a href="/2017/02/23/ruby-symbols/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Mortal and Immortal Symbols in Ruby</div>
+        </a>
+    
+</nav>
+
 
     
 </article>
 
 
     
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -403,13 +442,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://akhillb.github.io/about/index.html';
+            this.page.url = 'https://akhillb.github.io/2017/07/19/ocsp/';
         
-        this.page.identifier = 'undefined';
+        this.page.identifier = 'ocsp';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'akhil-lb' + '.disqus.com/count.js';
+        s.src = '//' + 'akhil-lb' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
