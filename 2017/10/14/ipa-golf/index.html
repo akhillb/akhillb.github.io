@@ -3,14 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Akhil&#39;s Personal Blog</title>
+    <title>Code golfing with IPA | Akhil&#39;s Personal Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Akhil's Personal Blog">
-<meta property="og:url" content="https://akhillb.github.io/index.html">
+    <meta name="description" content="Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is so">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Code golfing with IPA">
+<meta property="og:url" content="https://akhillb.github.io/2017/10/14/ipa-golf/index.html">
 <meta property="og:site_name" content="Akhil's Personal Blog">
+<meta property="og:description" content="Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is so">
+<meta property="og:updated_time" content="2017-10-19T01:09:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Akhil's Personal Blog">
+<meta name="twitter:title" content="Code golfing with IPA">
+<meta name="twitter:description" content="Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is so">
     
 
     
@@ -201,16 +205,15 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main">
-    <article id="post-ipa-golf" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-ipa-golf" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/10/14/ipa-golf/">Code golfing with IPA</a>
+        <h1 class="article-title" itemprop="name">
+            Code golfing with IPA
         </h1>
     
 
@@ -338,389 +341,32 @@ ga('send', 'pageview');
         </footer>
     </div>
     
-</article>
-
-
-
-    <article id="post-ocsp" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
         
-        
-            <header class="article-header">
-                
+<nav id="article-nav">
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/07/19/ocsp/">Trust Evaluation in iOS devices</a>
-        </h1>
     
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/07/19/ocsp/">
-            <time datetime="2017-07-19T13:23:29.000Z" itemprop="datePublished">July 19th 2017</time>
+        <a href="/2017/07/19/ocsp/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Trust Evaluation in iOS devices</div>
         </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Apple/">Apple</a>, <a class="tag-link" href="/tags/Security/">Security</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is valid or not. For verifying these certificates it provides an API called <a href="https://developer.apple.com/documentation/security/1394363-sectrustevaluate?language=objc" target="_blank" rel="external"><code>SecTrustEvaluate</code></a>.</p>
-<p>Now this function evaluates all the certificates in your chain of trust from the end SSL certificate to the root certificate. For each certificate, it evaluates whether it has been revoked or not. It chooses different methods for this, in an incremental approach. First it checks them in it’s cache, then in the set of certificates that the system has in the keychain and then it hits apple servers to verify them. Now, this is a network operation and remember that this operations is applied for all the certificates in your trust chain. It has a timeout of 7 seconds. The network operation uses something called the <a href="https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol" target="_blank" rel="external">OCSP Protocol</a> to evaluate the revocation status of each certificate. Unlike OSX, iOS does not have support to choose between CRL or OCSP. OCSP is enabled by default for iOS devices. In brief, the OSCP protocol is as follows. The device sends an HTTP request to a OSCP responder, like <a href="http://ocsp.apple.com" target="_blank" rel="external">http://ocsp.apple.com</a> and gets the response regarding the trustiness of the certificate. Since the request and response do not contain any sensitive information, HTTP can be used for these requests. These devices use a best effort level regarding the certificates. If they could not find any information regarding each of these certificates, then it considers it as trust worthy. These certificates are then added to its cache or the keychain.</p>
-<p>When using this API, it should be noted that this can be a blocking request. So it is not a good idea to use this on the main thread. Or, you could use <a href="https://developer.apple.com/documentation/security/1400632-sectrustevaluateasync?language=objc" target="_blank" rel="external"><code>SecTrustEvaluateAsync</code></a> for this job.</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://akhillb.github.io/2017/07/19/ocsp/" data-id="cj8xryu05000bxrw6rgypzos0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
     
-        <a href="https://akhillb.github.io/2017/07/19/ocsp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/07/19/ocsp/">Comments</a>
-    
+</nav>
 
-        </footer>
-    </div>
+
     
 </article>
 
 
-
-    <article id="post-ruby-symbols" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/02/23/ruby-symbols/">Mortal and Immortal Symbols in Ruby</a>
-        </h1>
+    <section id="comments">
     
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/02/23/ruby-symbols/">
-            <time datetime="2017-02-23T04:15:38.000Z" itemprop="datePublished">February 23rd 2017</time>
-        </a>
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
 
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Ruby/">Ruby</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Symbols are one of the most powerful datatypes that Ruby has to offer. Compare<br>and lookup operations are faster when symbols are used rather than strings. You<br>can check this <a href="http://www.reactive.io/tips/2009/01/11/the-difference-between-ruby-symbols-and-strings" target="_blank" rel="external">post</a> here know more about symbols and their performance when compared to strings.</p>
-<p>One disadvantage of using symbols is that, they live in the program’s memory<br>for the entire life cycle of it’s execution. This is one of the reasons for faster symbol lookups. This also was the reason for many denial of service vulnerabilites in Ruby, for example <a href="https://www.ruby-lang.org/en/news/2013/02/22/json-dos-cve-2013-0269/" target="_blank" rel="external">this one</a>.  </p>
-<p>From Ruby 2.2, there is a new concept of Mortal and Immortal Symbols. Internally<br>ruby has three types of symbols. Mortal dynamic symbols, which are symbols<br>created dynamically by user, Immortal dynamic symbols are the mortal dynamic symbols<br>that have been promoted to immortal dynamic symbols and then there are immortal<br>static symbols, which are function names, class names etc. The GC only collects the<br>Mortal dynamic symbols. An example of such symbols are symbols created by <code>to_sym</code> method.</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://akhillb.github.io/2017/02/23/ruby-symbols/" data-id="cj8xryu04000axrw6n3sbe79y" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
     
-        <a href="https://akhillb.github.io/2017/02/23/ruby-symbols/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/02/23/ruby-symbols/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/02/11/hello-world/">Hello World</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/02/11/hello-world/">
-            <time datetime="2017-02-11T13:01:43.000Z" itemprop="datePublished">February 11th 2017</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Hi there! I just setup this webpage. As of now, I haven’t started writing any blogs yet, but the idea is to start soon. Most of them will be about stuff related to Programming or Math.</p>
-<p>So, until then stay awesome and thank you.</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://akhillb.github.io/2017/02/11/hello-world/" data-id="cj8xrytz60001xrw6lnu54ol9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="https://akhillb.github.io/2017/02/11/hello-world/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://akhillb.github.io/2017/02/11/hello-world/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
+    </section>
 
 </section>
             
@@ -817,11 +463,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://akhillb.github.io/2017/10/14/ipa-golf/';
+        
+        this.page.identifier = 'ipa-golf';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'akhil-lb' + '.disqus.com/count.js';
+        s.src = '//' + 'akhil-lb' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
