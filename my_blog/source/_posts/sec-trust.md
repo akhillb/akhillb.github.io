@@ -1,0 +1,15 @@
+---
+title: Trust Evaluation in iOS devices
+date: 2017-07-19
+tags:
+- Apple
+- Security
+- iOS
+---
+Apple’s Security Framework provides enough APIs to implement your own methods to secure the data your app manages. One important component of managing certificates is verifying if the certificate is valid or not. For verifying these certificates it provides an API called `SecTrustEvaluate`.
+
+<!-- more -->
+
+Now this function evaluates all the certificates in your chain of trust from the end SSL certificate to the root certificate. For each certificate, it evaluates whether it has been revoked or not. It chooses different methods for this, in an incremental approach. First it checks them in it’s cache, then in the set of certificates that the system has in the keychain and then it hits apple servers to verify them. Now, this is a network operation and remember that this operations is applied for all the certificates in your trust chain. It has a timeout of 7 seconds. The network operation uses something called the [OCSP Protocol](https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol) to evaluate the revocation status of each certificate. Unlike OSX, iOS does not have support to choose between CRL or OCSP. OCSP is enabled by default for iOS devices. In brief, the OSCP protocol is as follows. The device sends an HTTP request to a OSCP responder, like [http://ocsp.apple.com]() and gets the response regarding the trustiness of the certificate. Since the request and response do not contain any sensitive information, HTTP can be used for these requests. These devices use a best effort level regarding the certificates. If they could not find any information regarding each of these certificates, then it considers it as trust worthy. These certificates are then added to its cache or the keychain.
+
+When using this API, it should be noted that this can be a blocking request. So it is not a good idea to use this on the main thread. Or, you could use `SecTrustEvaluateAsync` for this job.
