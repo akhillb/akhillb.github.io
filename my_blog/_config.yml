@@ -84,4 +84,4 @@ archive_generator:
 deploy:
   type: git
   repo: https://github.com/akhillb/akhillb.github.io
-  branch: gh_pages
+  branch: master
