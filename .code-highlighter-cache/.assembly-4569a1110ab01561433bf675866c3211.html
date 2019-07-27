@@ -1,0 +1,61 @@
+<figure class='code-highlight-figure'><figcaption class='code-highlight-caption'><span class='code-highlight-caption-title'>print.s</span></figcaption><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>.cstring
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>lC0:
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>	.ascii "%ld\0"
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>	.section __TEXT,__text_startup,regular,pure_instructions
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>	.align 4
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>	.globl _main
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>_main:
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>LFB1:
+</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>	movabsq	$4999999950000000, %rsi
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>	subq	$8, %rsp
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>LCFI0:
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>	xorl	%eax, %eax
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>	leaq	lC0(%rip), %rdi
+</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>	call	_printf
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>	xorl	%eax, %eax
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>	addq	$8, %rsp
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>LCFI1:
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'>	ret
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>LFE1:
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>	.section __TEXT,__eh_frame,coalesced,no_toc+strip_static_syms+live_support
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>EH_frame1:
+</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>	.set L$set$0,LECIE1-LSCIE1
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long L$set$0
+</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>LSCIE1:
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long	0
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x1
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>	.ascii "zR\0"
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x1
+</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x78
+</div></div><div data-line='30' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x10
+</div></div><div data-line='31' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x1
+</div></div><div data-line='32' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x10
+</div></div><div data-line='33' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0xc
+</div></div><div data-line='34' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x7
+</div></div><div data-line='35' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x8
+</div></div><div data-line='36' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x90
+</div></div><div data-line='37' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x1
+</div></div><div data-line='38' class='code-highlight-row numbered'><div class='code-highlight-line'>	.align 3
+</div></div><div data-line='39' class='code-highlight-row numbered'><div class='code-highlight-line'>LECIE1:
+</div></div><div data-line='40' class='code-highlight-row numbered'><div class='code-highlight-line'>LSFDE1:
+</div></div><div data-line='41' class='code-highlight-row numbered'><div class='code-highlight-line'>	.set L$set$1,LEFDE1-LASFDE1
+</div></div><div data-line='42' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long L$set$1
+</div></div><div data-line='43' class='code-highlight-row numbered'><div class='code-highlight-line'>LASFDE1:
+</div></div><div data-line='44' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long	LASFDE1-EH_frame1
+</div></div><div data-line='45' class='code-highlight-row numbered'><div class='code-highlight-line'>	.quad	LFB1-.
+</div></div><div data-line='46' class='code-highlight-row numbered'><div class='code-highlight-line'>	.set L$set$2,LFE1-LFB1
+</div></div><div data-line='47' class='code-highlight-row numbered'><div class='code-highlight-line'>	.quad L$set$2
+</div></div><div data-line='48' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0
+</div></div><div data-line='49' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x4
+</div></div><div data-line='50' class='code-highlight-row numbered'><div class='code-highlight-line'>	.set L$set$3,LCFI0-LFB1
+</div></div><div data-line='51' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long L$set$3
+</div></div><div data-line='52' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0xe
+</div></div><div data-line='53' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x10
+</div></div><div data-line='54' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x4
+</div></div><div data-line='55' class='code-highlight-row numbered'><div class='code-highlight-line'>	.set L$set$4,LCFI1-LCFI0
+</div></div><div data-line='56' class='code-highlight-row numbered'><div class='code-highlight-line'>	.long L$set$4
+</div></div><div data-line='57' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0xe
+</div></div><div data-line='58' class='code-highlight-row numbered'><div class='code-highlight-line'>	.byte	0x8
+</div></div><div data-line='59' class='code-highlight-row numbered'><div class='code-highlight-line'>	.align 3
+</div></div><div data-line='60' class='code-highlight-row numbered'><div class='code-highlight-line'>LEFDE1:
+</div></div><div data-line='61' class='code-highlight-row numbered'><div class='code-highlight-line'>	.subsections_via_symbols</div></div></pre></div></figure>

@@ -1,7 +1,11 @@
 ---
 layout: default
 ---
+<div>
 <h1>{{ page.title }}{{ page.shortUrl }}</h1>
+{% capture time %}{{ content | reading_time }}{% endcapture %}
+<p><i>{{ page.date | date: "%-d %B, %Y" }} · {{ time }} minute read.</i></p>
+</div>
 <div class='separator'></div>
         
 {{ content }}
