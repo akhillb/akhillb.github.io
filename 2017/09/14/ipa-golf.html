@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <!-- Begin Jekyll Favicon tag v0.2.7 -->
+<!-- Classic -->
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" sizes="48x48 32x32 16x16" href="/favicon.ico">
+  <link rel="icon" sizes="16x16" type="image/png" href="/assets/images/favicon-16x16.png">
+  <link rel="icon" sizes="32x32" type="image/png" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" sizes="64x64" type="image/png" href="/assets/images/favicon-64x64.png">
+  <link rel="icon" sizes="144x144" type="image/png" href="/assets/images/favicon-144x144.png">
+<!-- Safari -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicon-57x57.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicon-76x76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicon-120x120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/favicon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon-180x180.png">
+<!-- Chrome -->
+  <link rel="icon" sizes="192x192" href="/assets/images/favicon-192x192.png">
+  <link rel="icon" sizes="96x96" href="/assets/images/favicon-96x96.png">
+  <link rel="icon" sizes="48x48" href="/assets/images/favicon-48x48.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<!-- IE -->
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/images/favicon-144x144.png">
+<meta name='msapplication-config' content="/browserconfig.xml">
+<!-- End Jekyll Favicon tag -->
+    <title>
+        
+            Code golfing for iOS Apps
+        
+    </title>
+
+    
+        <link rel='stylesheet' href='https://akhil.xyz/assets/css/syntax.css' type='text/css'>
+    
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Code golfing for iOS Apps | Akhil’s Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Code golfing for iOS Apps" />
+<meta name="author" content="Akhil Labudubariki" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is somewhat similar, and this gave me the idea to try this for an iOS application." />
+<meta property="og:description" content="Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is somewhat similar, and this gave me the idea to try this for an iOS application." />
+<link rel="canonical" href="https://akhil.xyz/2017/09/14/ipa-golf.html" />
+<meta property="og:url" content="https://akhil.xyz/2017/09/14/ipa-golf.html" />
+<meta property="og:site_name" content="Akhil’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-14T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Akhil Labudubariki" />
+<script type="application/ld+json">
+{"description":"Recently I came across this Hacker news article, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with Code golf. This is somewhat similar, and this gave me the idea to try this for an iOS application.","author":{"@type":"Person","name":"Akhil Labudubariki"},"@type":"BlogPosting","url":"https://akhil.xyz/2017/09/14/ipa-golf.html","headline":"Code golfing for iOS Apps","dateModified":"2017-09-14T00:00:00+05:30","datePublished":"2017-09-14T00:00:00+05:30","mainEntityOfPage":{"@type":"WebPage","@id":"https://akhil.xyz/2017/09/14/ipa-golf.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="google-site-verification" content="sPsLh_Auy1tquLB8pCYoy5jB4ggMA7u3mev_OGBTlvA" />
+
+</head>
+
+<body>
+    <header>
+    <h1><a href='https://akhil.xyz/'>Akhil Labudubariki's Blog</a></h1>
+</header>
+<a href='https://akhil.xyz/'> Home</a> | <a href='https://akhil.xyz/about/'>About </a> | <a href='https://akhil.xyz/contact/'> Contacts</a> | <a href='https://akhil.xyz/archive/'> Archive</a> | <a href='https://akhil.xyz/assets/files/Resume.pdf' target='_blank'>Resume </a> | <a href='https://akhil.xyz/feed.xml' target='_blank'>RSS</a> 
+<hr>
+
+
+    <div>
+<h1>Code golfing for iOS Apps</h1>
+
+<p><i>14 September, 2017 · 7 minute read.</i></p>
+</div>
+<div class='separator'></div>
+        
+<p>Recently I came across this Hacker news <a href="https://news.ycombinator.com/item?id=15442743">article</a>, where the goal was to bring down the size of the apk, that can be installed on an android phone. People are usually familiar with <a href="https://en.wikipedia.org/wiki/Code_golf">Code golf</a>. This is somewhat similar, and this gave me the idea to try this for an iOS application.</p>
+
+<!-- more -->
+<p>So, first I started out with a basic Single View application, that comes up whenever we choose a new project from Xcode, but I chose <a href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a> as my programming language, since I have been used to it and developed few applications on it. To make things fast and easy, I decided not to export the archive built into an <a href="https://en.wikipedia.org/wiki/.ipa">IPA</a>, (mostly because I do not have a developer account and it’s too costly for me to afford it now). So to get the ipa file, I found out where the bundle is present from Xcode and tried zipping the bundle into a zip and rename it to a .ipa file. Theoritically, this is what Xcode also does, it creates your bundle file and compresses it to an ipa file. To verify if the ipa file will also be of the same size or not, I used iTunes to get the ipa file and verified it’s size. Both files were of same size. So building the ipa file now is easy, even though we don’t have the developer account. Of course I am not denying the features that we get having an Apple developer account, like <a href="https://help.apple.com/xcode/mac/current/#/devbbdc5ce4f">App thinning</a> would not be available to us, but all that can come later, once we have optimized things that we can control.</p>
+
+<p>So getting back to the Swift project, just building that sample application, which did not have any source code written by me in it, apart from the auto generated <code class="highlighter-rouge">AppDelegate</code> and <code class="highlighter-rouge">ViewController</code> files, the size of the application was around 28Mb. On inspecting the app size, I got the respective sizes of it’s contents.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nb">ls</span> <span class="nt">-lah</span> iOSGolf.app/<span class="k">*</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>  1 akhil  staff   1.1K Oct 15 23:25 iOSGolf.app/Info.plist
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>  1 akhil  staff     8B Oct 15 23:25 iOSGolf.app/PkgInfo
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>  1 akhil  staff   376B Oct 15 23:25 iOSGolf.app/archived-expanded-entitlements.xcent
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>  1 akhil  staff   7.5K Oct 15 23:25 iOSGolf.app/embedded.mobileprovision
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>  1 akhil  staff   307K Oct 15 23:25 iOSGolf.app/iOSGolf
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/Base.lproj:
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">total 0
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x   4 akhil  staff   136B Oct 15 23:27 <span class="nb">.</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x  10 akhil  staff   340B Oct 15 23:29 ..
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x   5 akhil  staff   170B Oct 15 23:27 LaunchScreen.storyboardc
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x   5 akhil  staff   170B Oct 15 23:27 Main.storyboardc
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/Frameworks:
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">total 142408
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x  11 akhil  staff   374B Oct 15 23:27 <span class="nb">.</span>
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x  10 akhil  staff   340B Oct 15 23:29 ..
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff    46M Oct 15 23:25 libswiftCore.dylib
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   1.1M Oct 15 23:25 libswiftCoreGraphics.dylib
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   252K Oct 15 23:25 libswiftCoreImage.dylib
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   633K Oct 15 23:25 libswiftDarwin.dylib
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   2.5M Oct 15 23:25 libswiftDispatch.dylib
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff    18M Oct 15 23:25 libswiftFoundation.dylib
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   445K Oct 15 23:25 libswiftObjectiveC.dylib
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   304K Oct 15 23:25 libswiftQuartzCore.dylib
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   683K Oct 15 23:25 libswiftUIKit.dylib
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/_CodeSignature:
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">total 16
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x   3 akhil  staff   102B Oct 15 23:27 <span class="nb">.</span>
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">drwxr-xr-x  10 akhil  staff   340B Oct 15 23:29 ..
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">-rw-r--r--</span>   1 akhil  staff   7.9K Oct 15 23:25 CodeResources</div></div></pre></div></figure>
+
+<p>As you can see the <code class="highlighter-rouge">Frameworks</code> folder itself takes up almost all the space. This folder contains the Swift runtime libraries. Swift apps contain these libraries because Swift is not ABI stable yet. If a language is not ABI stable, it means that you cannot guarantee that the binaries compiled on a certain version of that language will work perfectly with binaries compiled on another version of that language. You can read about what is ABI and why does it’s stability matters for a programming language and how Swift is proposing to achieve it over <a href="https://github.com/apple/swift/blob/master/docs/ABIStabilityManifesto.md">here</a>. I can try app thinning and other approaches recommended by Apple, but that would require Apple developer account. So I have decided to move away from Swift and try to work on Objective C. Doing the same initial step of choosing a single view application and building the app, the archive was at 26623 bytes. So for now, until the Swift’s ABI is stable, Objective C binaries might be of smaller size. This is what the binary contains</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nb">ls</span> <span class="nt">-lah</span> iOSGolf.app/<span class="k">*</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/Info.plist
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/PkgInfo
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/archived-expanded-entitlements.xcent
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/embedded.mobileprovision
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/iOSGolf
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/Base.lproj:
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">Main.storyboardc
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">iOSGolf.app/_CodeSignature:
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">CodeResources</div></div></pre></div></figure>
+
+<p>As you can see no more frameworks included. Now I started looking at the build settings of the app for settings that would help in reducing the binary size. First thing I found was Generate debug Symbols in Code generation column of Build settings. Debug symbols are just mappings from the instructions in the binary to the lines in the source code, these are necessary to make sense of crash reports or while attaching a debugger and running a step through execution of your binary. For iOS, these debug symbols are created in a file called dSYM and zipped with the app. I wanted to disable this for debug binaries, but a better way to do this was to build Release builds on running them. This is because, there is an optimization setting just below the Generate debug symbols section. This has different values set for both release and debug. For debug the value is set to <code class="highlighter-rouge">None</code>, and Release is set to <code class="highlighter-rouge">Fastest</code>, <code class="highlighter-rouge">Smallest</code>. <code class="highlighter-rouge">None</code> as specified does not do any other optimizations on the compile phase, other than reducing the cost of compilation (which by default almost all compilers do that). This makes the statements in the binary independent, so that new variables can be assigned or change the program counter after setting a breakpoint and I didn’t want to make all these changes and when debugging would be useful in the future it would be difficult to undo all these changes. So I decided to make release builds on running the app from xcode. The size was now down to 23432 bytes.</p>
+
+<p>The next thing I wanted to try was to restricting the architecture. Older iphones like iPhone 3GS, iPod touch were on <code class="highlighter-rouge">armv7</code> architecture. Phones like iPhone 5C were on <code class="highlighter-rouge">armv7s</code> architecture. The newer phones are on <code class="highlighter-rouge">arm64</code>. So I decided to restrict the architecture to <code class="highlighter-rouge">arm64</code> because then my binary won’t include instructions that are necessary for those devices. I think this is where Apple’s <code class="highlighter-rouge">ENABLE_BIT_CODE</code> is helpful. When you build from <code class="highlighter-rouge">BIT_CODE</code>, your binary basically is compatible with any kind of architecture. When you submit to the app store, Apple decides which architecture to install on your phone and then sends the particular architecture’s binary to be installed on that phone. Of course, this would result in a heavy binary being built before you submit to the App store. Anyhow, setting supported architecture to <code class="highlighter-rouge">arm64</code> did reduce the size but not by much. Size was not at 21006 bytes.</p>
+
+<p>Now I decided to look at the contents of my archive again. I found these <code class="highlighter-rouge">Main.storyboard</code> and <code class="highlighter-rouge">Launch.storyboard</code> files present. These storyboard files represent your app’s view. Now my app does not need two storyboards, because it will be showing up an empty screen and the UI is not my problem for this app. So I decided to edit my <code class="highlighter-rouge">Info.plist</code> to use the same storyboard for both launch and main and then I deleted one of the storyboard files that is not being used. After this, the size reduced to 20013 bytes. I tried few things after this like disabling <code class="highlighter-rouge">Code coverage support</code> and removing some extra contents in my <code class="highlighter-rouge">Info.plist</code>. Finally the size reduced to 19642 bytes.</p>
+
+<p>The highest contributors to size now were the app binary, storyboard files and the provisioning profile. I wanted to see if I could get rid of the storyboard file from my app. On looking at the <code class="highlighter-rouge">ViewController</code> class, I saw that it was an interface that implements the class <code class="highlighter-rouge">UIViewController</code>. So you really don’t need the <code class="highlighter-rouge">ViewController</code> class if you can replace all it’s call sites with <code class="highlighter-rouge">UIViewController</code>. All I had to do was change the class name for the scene in the storyboard to <code class="highlighter-rouge">UIViewController</code>. That didn’t help. Of course my source code was small, but my binary was still around the same size. Now I wanted to see if I could remove the <code class="highlighter-rouge">AppDelegate</code> file and see if that helped in reducing the size of the binary. On looking up where the <code class="highlighter-rouge">AppDelegate</code> class is referenced in the source code, it was inside the <code class="highlighter-rouge">main.m</code> file as</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="err">@autoreleasepool</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> 
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">argv</span><span class="p">,</span> 
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="nb">nil</span><span class="p">,</span> 
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">AppDelegate</span> <span class="nf">class</span><span class="p">])</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="p">);</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="p">&#x7d;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>So if I did the same thing again here, I can get rid of my <code class="highlighter-rouge">AppDelegate</code> file. So I removed <code class="highlighter-rouge">AppDelegate</code> from the above piece of code and used <code class="highlighter-rouge">UIResponder</code> which is what the <code class="highlighter-rouge">AppDelegate</code> inherits from. Now the code looked something like this.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="err">@autoreleasepool</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">		<span class="k">return</span> <span class="n">UIApplicationMain</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> 
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">argv</span><span class="p">,</span> 
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="nb">nil</span><span class="p">,</span> 
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">UIResponder</span> <span class="nf">class</span><span class="p">])</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">			<span class="p">);</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="p">&#x7d;</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>I removed the all the AppDelegate files and tried running the app. The app was launching but this time there was a black screen, instead of the white screen when it launched and was throwing me a warning saying that</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">You</span> <span class="n">need</span> <span class="n">to</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">UIWindow</span> <span class="k">for</span> <span class="n">your</span> <span class="n">application</span><span class="p">.</span></div></div></pre></div></figure>
+
+<p>Basically I have no window that shows the UI now, which is still fine because I do not care about the UI since it is not the main goal of this project, and no UI meant no storyboard files. So I removed all the contents of the <code class="highlighter-rouge">Assets.xcassets</code> and <code class="highlighter-rouge">Main.storyboard</code> and built the app now. It worked although it was showing me the same warning as above. This did help a lot, my app’s size was now reduced to 16443 bytes. The app binary still taking up half of the space and ther other half by the provisioning profile. Now I just print out the whole binary to see what does it contain. Most of it looked like Apple’s root certificate and my developer certificate and then some references to classes like <code class="highlighter-rouge">UIResponder</code>. The only thing I can get rid of now is all these unused class definitions in the binary. Their presence would mean that there is some code which is referencing the header file that contains these definitions. And here is only one file which contains any kind of code (atleast that makes sense to me) and that is the main.m file. As suspected it was importing the <code class="highlighter-rouge">UIKit.h</code> file and removing this would throw an error because I was still referencing <code class="highlighter-rouge">UIResponder</code> from my main function.</p>
+
+<p>That’s when it hit me, this is like any other C programme. It has a main function which is the starting point of entry for the execution process. I have been ignoring my basic concepts so far. I looked at the function definition of <code class="highlighter-rouge">UIApplicationMain</code> that is called in the function and it says that this is the main entry to the app and once your app enters this function it never returns it, even when it is in the background. It does have an <code class="highlighter-rouge">int</code> return type, but it never reaches it’s end. This function would be responsible for starting your event loop and doing all other initialisations that come in the app’s launch cycle. So if it is like any other C programme, then the following code should work.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>This code did not have the UIKit header file included. It compiled and when I ran it, the app launched and exited. So it worked. Now the app size was at 15807 bytes. There was no function definitions that were there before in the binary. It just contains the certificates now.</p>
+
+<p>This was where I gave up, I had no clue onto how to edit these things, because they are essential for the app to be installed on the phone. I could neither get rid of the provisioning profile which took the other half of the size. The only thing now left was to enroll into the developer program and then build an ipa file that is ready for app store distribution and then try different things provided by the Apple developer account.</p>
+
+<p>I have pushed the current app to <a href="https://github.com/akhillb/iOSGolf">iOSGolf repository</a>. Feel free to fork it or submit PR to it if you think I have missed out on something that would generate in an app binary of lesser size.</p>
+
+        
+ <div>
+        <div id='disqus_thread'></div>
+        
+        <script type='text/javascript'>
+            var disqus_shortname = 'akhil-lb';
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        
+        <noscript>Please enable JavaScript to view the <a href='http://disqus.com/?ref_noscript'> comments.</a></noscript>
+        <a href='http://disqus.com' class='dsq-brlink'>comments powered by<span class='logo-disqus'>Disqus</span></a>
+</div>
+ 
+
+
+<hr>
+    <p><small> <i>Build with <a href="https://jekyllrb.com/">Jekyll</a> and  <a href="https://github.com/cyevgeniy/jekyll-true-minimal/">true minimal theme</a></i> </small></p>
+</body>
+</html>
