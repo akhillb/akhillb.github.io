@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <!-- Begin Jekyll Favicon tag v0.2.7 -->
+<!-- Classic -->
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" sizes="48x48 32x32 16x16" href="/favicon.ico">
+  <link rel="icon" sizes="16x16" type="image/png" href="/assets/images/favicon-16x16.png">
+  <link rel="icon" sizes="32x32" type="image/png" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" sizes="64x64" type="image/png" href="/assets/images/favicon-64x64.png">
+  <link rel="icon" sizes="144x144" type="image/png" href="/assets/images/favicon-144x144.png">
+<!-- Safari -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicon-57x57.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicon-76x76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicon-120x120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/favicon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon-180x180.png">
+<!-- Chrome -->
+  <link rel="icon" sizes="192x192" href="/assets/images/favicon-192x192.png">
+  <link rel="icon" sizes="96x96" href="/assets/images/favicon-96x96.png">
+  <link rel="icon" sizes="48x48" href="/assets/images/favicon-48x48.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<!-- IE -->
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/images/favicon-144x144.png">
+<meta name='msapplication-config' content="/browserconfig.xml">
+<!-- End Jekyll Favicon tag -->
+    <title>
+        
+            GCC compile time optimizations
+        
+    </title>
+
+    
+        <link rel='stylesheet' href='https://akhil.xyz/assets/css/syntax.css' type='text/css'>
+    
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>GCC compile time optimizations | Akhil’s Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="GCC compile time optimizations" />
+<meta name="author" content="Akhil Labudubariki" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recently, over a discussion, my friend claimed that NodeJS is approximately 1.5 times faster than C, even for a task that would just include a simple for loop over 100000000 numbers. Now that is a huge claim and of course I did not believe it." />
+<meta property="og:description" content="Recently, over a discussion, my friend claimed that NodeJS is approximately 1.5 times faster than C, even for a task that would just include a simple for loop over 100000000 numbers. Now that is a huge claim and of course I did not believe it." />
+<link rel="canonical" href="https://akhil.xyz/2018/03/13/gcc.html" />
+<meta property="og:url" content="https://akhil.xyz/2018/03/13/gcc.html" />
+<meta property="og:site_name" content="Akhil’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-13T03:37:36+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Akhil Labudubariki" />
+<script type="application/ld+json">
+{"description":"Recently, over a discussion, my friend claimed that NodeJS is approximately 1.5 times faster than C, even for a task that would just include a simple for loop over 100000000 numbers. Now that is a huge claim and of course I did not believe it.","author":{"@type":"Person","name":"Akhil Labudubariki"},"@type":"BlogPosting","url":"https://akhil.xyz/2018/03/13/gcc.html","headline":"GCC compile time optimizations","dateModified":"2018-03-13T03:37:36+05:30","datePublished":"2018-03-13T03:37:36+05:30","mainEntityOfPage":{"@type":"WebPage","@id":"https://akhil.xyz/2018/03/13/gcc.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="google-site-verification" content="sPsLh_Auy1tquLB8pCYoy5jB4ggMA7u3mev_OGBTlvA" />
+
+</head>
+
+<body>
+    <header>
+    <h1><a href='https://akhil.xyz/'>Akhil Labudubariki's Blog</a></h1>
+</header>
+<a href='https://akhil.xyz/'> Home</a> | <a href='https://akhil.xyz/about/'>About </a> | <a href='https://akhil.xyz/contact/'> Contacts</a> | <a href='https://akhil.xyz/archive/'> Archive</a> | <a href='https://akhil.xyz/assets/files/Resume.pdf' target='_blank'>Resume </a> | <a href='https://akhil.xyz/feed.xml' target='_blank'>RSS</a> 
+<hr>
+
+
+    <div>
+<h1>GCC compile time optimizations</h1>
+
+<p><i>13 March, 2018 · 4 minute read.</i></p>
+</div>
+<div class='separator'></div>
+        
+<p>Recently, over a discussion, my friend claimed that NodeJS is approximately 1.5 times faster than C, even for a task that would just include a simple for loop over 100000000 numbers. Now that is a huge claim and of course I did not believe it.</p>
+
+<!-- more -->
+<p>The following were his code samples in NodeJS and C.</p>
+
+<p><em>Note:</em> All the provided numbers were obtained by running the code samples on a MacBook Pro with a 2.7 GHz processor and 8 GB RAM. I used GCC version 7.2.0 and Node version 7.10.1.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">loop.js</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">loop.c</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="k">for</span> <span class="p">(</span><span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">&#x7b;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">  	<span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="p">&#x7d;</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="p">&#x7d;</span></div></div></pre></div></figure>
+
+<p>Then he timed both of the above. The following were the recordings</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">time </span>node loop.js
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">real	0m0.241s
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">user	0m0.153s
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">sys	0m0.021s
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span><span class="nb">time</span> ./a.out
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">real	0m0.264s
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">user	0m0.257s
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">sys	0m0.003s</div></div></pre></div></figure>
+
+<p>Of course after looking the way he compiled his binary, I figured out how to his C code run faster without making any changes. I took his terminal and tried the following</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nv">$ </span>gcc <span class="nt">-O2</span> loop.c
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">real	0m0.004s
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">user	0m0.001s
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">sys	0m0.001s</div></div></pre></div></figure>
+
+<p>Now the C code was way faster than it was before. The <code class="highlighter-rouge">-O2</code> flag just tells the compiler to apply all a bunch of known optimisations while compiling the binary. You can read more about it over <a href="https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html">here</a>. I was expecting the binary to run faster than the NodeJS script, but I did not expect it to improve it by such a huge factor. So, I was curious.</p>
+
+<p>I took a look at all the options that are applied for optimizations over <a href="https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html">here</a>. For O2 level there were too many options that were being applied for it and I didn’t want to spend time reading each and every option and deciding if that option would have impacted it or not. I took a different approach. I wanted to see how different were the compiled machine code. Since it was a small program, hopefully it shouldn’t take too much time to understand the generated assembly code. So I got the assembly code for both cases, one without -O2 option specified and the other with -O2 option.</p>
+
+<p>This was the assembly output that was generated when optimizations were not enabled.</p>
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">unoptimized.s</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">.text
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	.globl _main
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">_main:
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">LFB1:
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">	pushq	%rbp
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">LCFI0:
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">	movq	%rsp, %rbp
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">LCFI1:
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">	movq	$0, -8(%rbp)
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">	movq	$0, -16(%rbp)
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">	jmp	L2
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">L3:
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">	movq	-16(%rbp), %rax
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">	addq	%rax, -8(%rbp)
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">	addq	$1, -16(%rbp)
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">L2:
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">	cmpq	$99999999, -16(%rbp)
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">	jle	L3
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">	movl	$0, %eax
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">	popq	%rbp
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">LCFI2:
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">	ret
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">LFE1:
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">	.section __TEXT,__eh_frame,coalesced,no_toc+strip_static_syms+live_support
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">EH_frame1:
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$0,LECIE1-LSCIE1
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$0
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">LSCIE1:
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	0
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">	.ascii "zR\0"
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x78
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xc
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x7
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x8
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x90
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">LECIE1:
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">LSFDE1:
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$1,LEFDE1-LASFDE1
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$1
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">LASFDE1:
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	LASFDE1-EH_frame1
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad	LFB1-.
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$2,LFE1-LFB1
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad L$set$2
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x4
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$3,LCFI0-LFB1
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$3
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xe
+</div></div><div data-line="57" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="58" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x86
+</div></div><div data-line="59" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x2
+</div></div><div data-line="60" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x4
+</div></div><div data-line="61" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$4,LCFI1-LCFI0
+</div></div><div data-line="62" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$4
+</div></div><div data-line="63" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xd
+</div></div><div data-line="64" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x6
+</div></div><div data-line="65" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x4
+</div></div><div data-line="66" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$5,LCFI2-LCFI1
+</div></div><div data-line="67" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$5
+</div></div><div data-line="68" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xc
+</div></div><div data-line="69" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x7
+</div></div><div data-line="70" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x8
+</div></div><div data-line="71" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="72" class="code-highlight-row numbered"><div class="code-highlight-line">LEFDE1:
+</div></div><div data-line="73" class="code-highlight-row numbered"><div class="code-highlight-line">	.subsections_via_symbols</div></div></pre></div></figure>
+
+<p>The following is the generated assembly when optimizations were enabled</p>
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">optimized.s</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">.section __TEXT,__text_startup,regular,pure_instructions
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 4
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">	.globl _main
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">_main:
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">LFB1:
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">	xorl	%eax, %eax
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">	ret
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">LFE1:
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">	.section __TEXT,__eh_frame,coalesced,no_toc+strip_static_syms+live_support
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">EH_frame1:
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$0,LECIE1-LSCIE1
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$0
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">LSCIE1:
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	0
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">	.ascii "zR\0"
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x78
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xc
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x7
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x8
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x90
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">LECIE1:
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">LSFDE1:
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$1,LEFDE1-LASFDE1
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$1
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">LASFDE1:
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	LASFDE1-EH_frame1
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad	LFB1-.
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$2,LFE1-LFB1
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad L$set$2
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">LEFDE1:
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">	.subsections_via_symbols</div></div></pre></div></figure>
+
+<p>If you take a look at the generated output, you can see the main difference apart from few simple instructions removed or added is that there are fewer labels in it. This must imply that the compiler has applied few optimizations to our for loop. Let’s go over each difference one by one. I shall be taking the optimized.s and going through each line and explaining how it is different in the unoptimized code.</p>
+
+<p>To begin with, the initial <code class="highlighter-rouge">.text</code> directive is replaced with <code class="highlighter-rouge">.section</code> directive. According to <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Reference/Assembler/040-Assembler_Directives/asm_directives.html#//apple_ref/doc/uid/TP30000823-CJBDFFDF">Apple’s developer documentation for their Assembler</a>, both of them are actually equivalent when dynamic linking is enabled. This might hint that when optimizations are not enabled, the binary is statically linked ( I could not find anything that would confirm this ). The next instruction uses <code class="highlighter-rouge">align</code> to 4, which should be the length of <code class="highlighter-rouge">word</code> for this particular machine. Aligning your instructions / data is a known to help optimize your system’s fetching respective instruction / data. So, it makes sense to have this, especially when there is a loop involved. Now, the only other differences you can see are the instructions between <code class="highlighter-rouge">LFB1</code> and <code class="highlighter-rouge">LFE1</code> and instructions appearing after <code class="highlighter-rouge">_EH_frame1</code>.</p>
+
+<p>Going through the <a href="https://github.com/gcc-mirror/gcc/blob/gcc-4_8_2-release/gcc/dwarf2out.c">dwarf2out.c</a> file, we can see that <code class="highlighter-rouge">LFB</code> indicates a beginning of the function and <code class="highlighter-rouge">LFE</code> indicates the end of the function. Adding an <code class="highlighter-rouge">L</code> before the label is GCC’s notation of indicating it’s a local label. <code class="highlighter-rouge">LCFI</code> would indicate call frame So everything between is the assembly output for our logic. As you can see there is little in between these lines in our optimized code, whereas the unoptimized code clearly has <code class="highlighter-rouge">jmp</code>, <code class="highlighter-rouge">cmpq</code> instructions. The presence of <code class="highlighter-rouge">jmp</code>, <code class="highlighter-rouge">cmpq</code> prooves that it is trying to increment by 1, check if the value is equal to certain thing and otherwise jump back to previous instruction. Our optmized simply has a <code class="highlighter-rouge">xorl %eax, %eax</code>, which is just clearing the value in <code class="highlighter-rouge">%eax%</code> register and setting it to 0 and then just a <code class="highlighter-rouge">ret</code> statement. So it is not even going in the loop. This would explain the reason for such a huge improvement. Logically it makes sense if we look at our for loop in C. It simply loops over and the resultant variable is never used. It can be considered as dead code. I tried to add a simple <code class="highlighter-rouge">printf</code> to prove if I were right. The resulting assembly code was different.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">loop.c with printf</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">#include &lt;stdio.h&gt;
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">int main() &#x7b;
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">  long sum = 0;
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  for (long i = 0; i &lt; 100000000; i++) &#x7b;
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">  	sum += i;
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">  &#x7d;
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">  printf("%ld", sum);
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">  return 0;
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">&#x7d;</div></div></pre></div></figure>
+
+<p>This was compiled with optimizations enabled.</p>
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">print.s</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">.cstring
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">lC0:
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">	.ascii "%ld\0"
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">	.section __TEXT,__text_startup,regular,pure_instructions
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 4
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">	.globl _main
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">_main:
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">LFB1:
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">	movabsq	$4999999950000000, %rsi
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">	subq	$8, %rsp
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">LCFI0:
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">	xorl	%eax, %eax
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">	leaq	lC0(%rip), %rdi
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">	call	_printf
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">	xorl	%eax, %eax
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">	addq	$8, %rsp
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">LCFI1:
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">	ret
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">LFE1:
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">	.section __TEXT,__eh_frame,coalesced,no_toc+strip_static_syms+live_support
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">EH_frame1:
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$0,LECIE1-LSCIE1
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$0
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">LSCIE1:
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	0
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">	.ascii "zR\0"
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x78
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xc
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x7
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x8
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x90
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x1
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">LECIE1:
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">LSFDE1:
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$1,LEFDE1-LASFDE1
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$1
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">LASFDE1:
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">	.long	LASFDE1-EH_frame1
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad	LFB1-.
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$2,LFE1-LFB1
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">	.quad L$set$2
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x4
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$3,LCFI0-LFB1
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$3
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xe
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x10
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x4
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">	.set L$set$4,LCFI1-LCFI0
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">	.long L$set$4
+</div></div><div data-line="57" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0xe
+</div></div><div data-line="58" class="code-highlight-row numbered"><div class="code-highlight-line">	.byte	0x8
+</div></div><div data-line="59" class="code-highlight-row numbered"><div class="code-highlight-line">	.align 3
+</div></div><div data-line="60" class="code-highlight-row numbered"><div class="code-highlight-line">LEFDE1:
+</div></div><div data-line="61" class="code-highlight-row numbered"><div class="code-highlight-line">	.subsections_via_symbols</div></div></pre></div></figure>
+
+<p>As you can see, this time it directly assigns the value 4999999950000000 to <code class="highlighter-rouge">rsi</code> register, which is the sum that we get in the loop. The compiler calculated it during compile time and replaced it in the assembly code without needing to run the loop during runtime.</p>
+
+<p>To explain the differences in <code class="highlighter-rouge">.EH_frame1</code> section, we need to know what section implies. <code class="highlighter-rouge">.EH_frame1</code> section is made used for exception handling and printing stack traces. Since, we had more blocks in our unoptimized code, it would explain the shorter tables in this section.</p>
+
+<p>There were other smaller optimizations that were use. Example being use <code class="highlighter-rouge">xorl %eax, %eax</code> to instead of <code class="highlighter-rouge">mov %eax, 0</code> since it uses only 2 bytes and on many CPUs it doesn’t use an execution unit, thus saving power and resources. You can read more about it in this <a href="https://randomascii.wordpress.com/2012/12/29/the-surprising-subtleties-of-zeroing-a-register/">fantastic article</a>. These optimisations are just for a small program that does a simple job of looping over huge numbers, imagine the optimisations that the compilers do over huge programs. Do try the optimized option, I think most C and C++ compilers provide it. There is one catch, enabling optimizations might increase your compile time, so only try if your project is small in size or compile time is not an issue.</p>
+
+        
+ <div>
+        <div id='disqus_thread'></div>
+        
+        <script type='text/javascript'>
+            var disqus_shortname = 'akhil-lb';
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        
+        <noscript>Please enable JavaScript to view the <a href='http://disqus.com/?ref_noscript'> comments.</a></noscript>
+        <a href='http://disqus.com' class='dsq-brlink'>comments powered by<span class='logo-disqus'>Disqus</span></a>
+</div>
+ 
+
+
+<hr>
+    <p><small> <i>Build with <a href="https://jekyllrb.com/">Jekyll</a> and  <a href="https://github.com/cyevgeniy/jekyll-true-minimal/">true minimal theme</a></i> </small></p>
+</body>
+</html>
